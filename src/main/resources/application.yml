@@ -1,0 +1,87 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: vogt-digital-campus
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/vogt_digital_campus}
+    username: ${DB_USER:vogt}
+    password: ${DB_PASSWORD:vogt}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    consumer:
+      group-id: vogt-digital-campus
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "cm.vogt.digitalcampus.kafka.event"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 20MB
+  mail:
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:CHANGE_ME_IN_ENV_MIN_32_CHARS_LONG_SECRET}
+    access-token-minutes: ${JWT_ACCESS_MINUTES:30}
+    refresh-token-days: ${JWT_REFRESH_DAYS:7}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000}
+  application:
+    tracking-prefix: ${APPLICATION_PREFIX:VHT}
+  mail:
+    from-address: ${MAIL_FROM:no-reply@vogthightech.cm}
+    enabled: ${MAIL_ENABLED:false}
+  push:
+    public-key: ${VAPID_PUBLIC_KEY:}
+    private-key: ${VAPID_PRIVATE_KEY:}
+    subject: ${VAPID_SUBJECT:mailto:admin@vogthightech.cm}
+  whatsapp:
+    enabled: ${WHATSAPP_ENABLED:false}
+    account-sid: ${TWILIO_ACCOUNT_SID:}
+    auth-token: ${TWILIO_AUTH_TOKEN:}
+    from-number: ${TWILIO_WHATSAPP_FROM:}
+  storage:
+    provider: ${STORAGE_PROVIDER:local}
+    bucket: ${STORAGE_BUCKET:vogt-documents}
+    endpoint: ${STORAGE_ENDPOINT:}
+    access-key: ${STORAGE_ACCESS_KEY:}
+    secret-key: ${STORAGE_SECRET_KEY:}
+    region: ${STORAGE_REGION:auto}
+    public-base-url: ${STORAGE_PUBLIC_BASE_URL:}
+    local-path: ${STORAGE_LOCAL_PATH:./storage}
+
+springdoc:
+  api-docs:
+    path: /api/v1/docs
+  swagger-ui:
+    path: /api/v1/swagger-ui.html
+
+logging:
+  level:
+    org.apache.kafka: ERROR
+    cm.vogt.digitalcampus.security: DEBUG
