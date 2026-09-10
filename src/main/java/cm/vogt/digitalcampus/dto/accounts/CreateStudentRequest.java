@@ -12,7 +12,8 @@ public class CreateStudentRequest {
     @NotBlank private String lastName;
     @Email @NotBlank private String email;
     private String phone;
-    @NotBlank private String initialPassword;
+    /** Optionnel — genere automatiquement si vide. */
+    private String initialPassword;
     @NotBlank private String matricule;
     private int yearOfStudy;
     private UUID programId;

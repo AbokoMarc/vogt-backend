@@ -12,7 +12,9 @@ public class CreateTeacherRequest {
     @NotBlank private String lastName;
     @Email @NotBlank private String email;
     private String phone;
-    @NotBlank private String initialPassword;
+    /** Optionnel — si vide, un mot de passe securise est genere automatiquement
+     *  et communique a l'enseignant via le lien "definir mon mot de passe". */
+    private String initialPassword;
     private String department;
     private String title;
     private List<String> specialties;

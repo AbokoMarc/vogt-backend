@@ -38,6 +38,7 @@ c'est l'étape la plus "technique" et elle se fait aussi depuis le navigateur.
    - `DB_PASSWORD` = le mot de passe fourni par Render
    - `JWT_SECRET` = une chaîne aléatoire d'au moins 32 caractères (générez-en une, ex. via https://generate-secret.vercel.app/32)
    - `CORS_ORIGINS` = l'URL de votre futur site Netlify (vous la connaîtrez après l'étape 3 — vous pourrez revenir la modifier)
+   - `PUBLIC_BASE_URL` = l'URL de **ce service Render lui-même** (ex. `https://vogt-backend.onrender.com`) — **indispensable**, sinon les images uploadées (galerie, logos) resteront invisibles sur le site
    - `KAFKA_BROKERS` = laissez la valeur par défaut pour l'instant (voir note Kafka plus bas)
 6. Cliquez **Create Web Service**. Render construit l'image Docker et démarre l'application (comptez 3-5 minutes la première fois).
 7. Une fois "Live", votre API est disponible à une URL du type `https://vogt-digital-campus-backend.onrender.com/api/v1`. Testez avec `https://.../api/v1/swagger-ui.html`.

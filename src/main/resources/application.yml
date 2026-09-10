@@ -53,6 +53,7 @@ app:
     allowed-origins: ${CORS_ORIGINS:http://localhost:3000}
   application:
     tracking-prefix: ${APPLICATION_PREFIX:VHT}
+  public-base-url: ${PUBLIC_BASE_URL:}
   mail:
     from-address: ${MAIL_FROM:no-reply@vogthightech.cm}
     enabled: ${MAIL_ENABLED:false}

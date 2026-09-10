@@ -147,16 +147,28 @@ public class AccountService {
         if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new BadRequestException("Un compte existe deja avec cet email.");
         }
+        String passwordToUse = (initialPassword == null || initialPassword.isBlank())
+                ? generateSecurePassword()
+                : initialPassword;
+
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setPasswordHash(passwordEncoder.encode(initialPassword));
+        user.setPasswordHash(passwordEncoder.encode(passwordToUse));
         user.setRole(role);
         user.setActive(true);
         user.setCreatedByEmail(creatorEmail);
         return userRepository.save(user);
+    }
+
+    /** Mot de passe temporaire aleatoire — jamais affiche a l'administrateur ;
+     *  la personne definit son propre mot de passe via le lien recu par email. */
+    private String generateSecurePassword() {
+        byte[] bytes = new byte[18];
+        new java.security.SecureRandom().nextBytes(bytes);
+        return java.util.Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
     private void notifyNewAccount(User user, String espace) {

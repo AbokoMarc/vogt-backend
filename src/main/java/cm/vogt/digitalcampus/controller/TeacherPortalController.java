@@ -19,9 +19,24 @@ public class TeacherPortalController {
 
     private final TeacherPortalService teacherPortalService;
 
+    @GetMapping("/profile")
+    public ApiResponse<?> profile(@AuthenticationPrincipal VogtUserDetails principal) {
+        return ApiResponse.ok(teacherPortalService.profile(principal.getUser().getId()));
+    }
+
     @GetMapping("/courses")
     public ApiResponse<?> myCourses(@AuthenticationPrincipal VogtUserDetails principal) {
         return ApiResponse.ok(teacherPortalService.myCourses(principal.getUser().getId()));
+    }
+
+    @GetMapping("/students")
+    public ApiResponse<?> myStudents(@AuthenticationPrincipal VogtUserDetails principal) {
+        return ApiResponse.ok(teacherPortalService.myStudents(principal.getUser().getId()));
+    }
+
+    @GetMapping("/course-options")
+    public ApiResponse<?> myCourseOptions(@AuthenticationPrincipal VogtUserDetails principal) {
+        return ApiResponse.ok(teacherPortalService.myCourseOptions(principal.getUser().getId()));
     }
 
     @PostMapping("/grades")
