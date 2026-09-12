@@ -21,6 +21,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
     bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    admin:
+      auto-startup: false
+      auto-create: false
     consumer:
       group-id: vogt-digital-campus
       auto-offset-reset: earliest
