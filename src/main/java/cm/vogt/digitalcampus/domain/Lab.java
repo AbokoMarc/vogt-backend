@@ -20,6 +20,7 @@ public class Lab extends BaseEntity {
     private String name;
     private String description;
     private String iconKey;
+    private String imageUrl;
     private boolean active = true;
     private boolean futureProject = true;
 }

@@ -23,7 +23,45 @@ public class AcademicYearService {
     private final AuditLogService auditLogService;
 
     public List<AcademicYear> listAll() {
-        return academicYearRepository.findAll();
+        return academicYearRepository.findAll().stream().filter(y -> !y.isDeleted()).toList();
+    }
+
+    /** Corbeille — annees supprimees il y a moins de 30 jours, restaurables. */
+    public List<AcademicYear> listTrash() {
+        java.time.Instant cutoff = java.time.Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS);
+        return academicYearRepository.findAll().stream()
+                .filter(y -> y.isDeleted() && y.getDeletedAt() != null && y.getDeletedAt().isAfter(cutoff))
+                .toList();
+    }
+
+    @Transactional
+    public void softDelete(UUID id) {
+        AcademicYear year = academicYearRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Annee academique introuvable."));
+        if (year.getStatus() == AcademicYearStatus.ACTIVE) {
+            throw new cm.vogt.digitalcampus.common.BadRequestException(
+                    "Impossible de supprimer l'annee active. Activez une autre annee d'abord.");
+        }
+        year.setDeleted(true);
+        year.setDeletedAt(java.time.Instant.now());
+        academicYearRepository.save(year);
+        auditLogService.log("DELETE_ACADEMIC_YEAR", "AcademicYear", year.getId().toString(),
+                "Annee supprimee (restaurable 30 jours) : " + year.getLabel());
+    }
+
+    @Transactional
+    public void restore(UUID id) {
+        AcademicYear year = academicYearRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Annee academique introuvable."));
+        java.time.Instant cutoff = java.time.Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS);
+        if (!year.isDeleted() || year.getDeletedAt() == null || year.getDeletedAt().isBefore(cutoff)) {
+            throw new cm.vogt.digitalcampus.common.BadRequestException(
+                    "Cette annee ne peut plus etre restauree (delai de 30 jours depasse ou deja active).");
+        }
+        year.setDeleted(false);
+        year.setDeletedAt(null);
+        academicYearRepository.save(year);
+        auditLogService.log("RESTORE_ACADEMIC_YEAR", "AcademicYear", year.getId().toString(), "Annee restauree : " + year.getLabel());
     }
 
     @Transactional

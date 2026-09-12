@@ -37,4 +37,5 @@ public abstract class BaseEntity {
 
     /** Soft delete — les entites de contenu ne sont jamais supprimees definitivement. */
     private boolean deleted = false;
+    private Instant deletedAt;
 }

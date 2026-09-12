@@ -33,4 +33,21 @@ public class AdminAcademicYearController {
         return ApiResponse.ok("Annee academique activee ; l'annee precedente est archivee.",
                 academicYearService.activate(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> delete(@PathVariable UUID id) {
+        academicYearService.softDelete(id);
+        return ApiResponse.ok("Annee supprimee — restaurable pendant 30 jours.", null);
+    }
+
+    @GetMapping("/trash")
+    public ApiResponse<List<AcademicYear>> trash() {
+        return ApiResponse.ok(academicYearService.listTrash());
+    }
+
+    @PostMapping("/{id}/restore")
+    public ApiResponse<Void> restore(@PathVariable UUID id) {
+        academicYearService.restore(id);
+        return ApiResponse.ok("Annee academique restauree.", null);
+    }
 }
