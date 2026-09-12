@@ -18,6 +18,11 @@ public class AdminGalleryController {
 
     private final GalleryItemRepository galleryItemRepository;
 
+    @GetMapping
+    public ApiResponse<List<GalleryItem>> list() {
+        return ApiResponse.ok(galleryItemRepository.findAll());
+    }
+
     @PostMapping
     public ApiResponse<GalleryItem> add(@RequestBody GalleryItem item) {
         return ApiResponse.ok("Media ajoute.", galleryItemRepository.save(item));

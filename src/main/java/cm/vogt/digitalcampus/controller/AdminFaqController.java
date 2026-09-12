@@ -17,6 +17,11 @@ public class AdminFaqController {
 
     private final FaqItemRepository faqItemRepository;
 
+    @GetMapping
+    public ApiResponse<List<FaqItem>> list() {
+        return ApiResponse.ok(faqItemRepository.findAll());
+    }
+
     @PostMapping
     public ApiResponse<FaqItem> create(@RequestBody FaqItem item) { return ApiResponse.ok("FAQ ajoutee.", faqItemRepository.save(item)); }
 

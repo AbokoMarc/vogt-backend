@@ -17,6 +17,11 @@ public class AdminStudentProjectController {
 
     private final StudentProjectRepository studentProjectRepository;
 
+    @GetMapping
+    public ApiResponse<java.util.List<StudentProject>> list() {
+        return ApiResponse.ok(studentProjectRepository.findAll());
+    }
+
     @PostMapping
     public ApiResponse<StudentProject> create(@RequestBody StudentProject project) {
         return ApiResponse.ok("Projet ajoute.", studentProjectRepository.save(project));
