@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: vogt-backend
+    runtime: docker
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: CORS_ORIGINS
+        value: https://chimerical-twilight-05fe56.netlify.app
+      - key: PUBLIC_BASE_URL
+        value: https://vogt-backend.onrender.com

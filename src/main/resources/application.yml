@@ -50,7 +50,7 @@ app:
     access-token-minutes: ${JWT_ACCESS_MINUTES:30}
     refresh-token-days: ${JWT_REFRESH_DAYS:7}
   cors:
-    allowed-origins: ${CORS_ORIGINS:http://localhost:3000}
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,https://chimerical-twilight-05fe56.netlify.app}
   application:
     tracking-prefix: ${APPLICATION_PREFIX:VHT}
   public-base-url: ${PUBLIC_BASE_URL:}
