@@ -32,6 +32,7 @@ public class AdminLabController {
         lab.setName(payload.getName());
         lab.setDescription(payload.getDescription());
         lab.setIconKey(payload.getIconKey());
+        lab.setImageUrl(payload.getImageUrl());
         lab.setFutureProject(payload.isFutureProject());
         return ApiResponse.ok("Laboratoire mis a jour.", labRepository.save(lab));
     }

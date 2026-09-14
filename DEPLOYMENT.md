@@ -45,11 +45,11 @@ c'est l'étape la plus "technique" et elle se fait aussi depuis le navigateur.
 
 ## Étape 3 — Déployer le frontend sur Netlify
 
-1. Avant de déployer, éditez **une seule ligne** dans chaque fichier HTML du frontend : ajoutez juste avant `<script src="js/api.js"></script>` :
-   ```html
-   <script>window.VOGT_API_BASE_URL = "https://VOTRE-URL-RENDER.onrender.com/api/v1";</script>
+1. Avant de déployer, éditez **un seul fichier** : `js/config.js`. Remplacez la valeur par l'URL obtenue à l'étape 2.6 :
+   ```js
+   window.VOGT_API_BASE_URL = "https://VOTRE-URL-RENDER.onrender.com/api/v1";
    ```
-   (remplacez par l'URL obtenue à l'étape 2.6). Faites ce changement directement dans l'éditeur de fichiers GitHub (icône crayon sur chaque fichier), pas besoin d'outil local.
+   Faites ce changement directement dans l'éditeur de fichiers GitHub (icône crayon), pas besoin d'outil local. **C'est le seul fichier à modifier** — toutes les pages le chargent automatiquement.
 2. Créez un compte sur https://netlify.com (connexion possible avec GitHub).
 3. **Add new site** → **Import an existing project** → choisissez votre repo `vogt-digital-campus-frontend`.
 4. Aucune commande de build n'est nécessaire (site statique) : laissez "Build command" vide et "Publish directory" à `.` (racine).

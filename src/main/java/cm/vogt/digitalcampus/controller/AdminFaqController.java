@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -17,11 +16,6 @@ import java.util.UUID;
 public class AdminFaqController {
 
     private final FaqItemRepository faqItemRepository;
-
-    @GetMapping
-    public ApiResponse<List<FaqItem>> list() {
-        return ApiResponse.ok(faqItemRepository.findAll());
-    }
 
     @PostMapping
     public ApiResponse<FaqItem> create(@RequestBody FaqItem item) { return ApiResponse.ok("FAQ ajoutee.", faqItemRepository.save(item)); }
