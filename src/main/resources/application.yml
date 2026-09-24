@@ -21,6 +21,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   kafka:
     bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    admin:
+      fail-fast: false            # 👈 Ajouté : Évite de crasher si le broker est injoignable
+      close-timeout: 0s           # 👈 Ajouté : Arrête d'attendre indéfiniment les topics existants
     consumer:
       group-id: vogt-digital-campus
       auto-offset-reset: earliest
@@ -85,4 +88,4 @@ springdoc:
 logging:
   level:
     org.apache.kafka: ERROR
-    cm.vogt.digitalcampus.security: DEBUG
+    cm.vogt.digitalcampus.security: DEBUG # 👈 Aligné : Correction de l'espace d'indentation manquant
