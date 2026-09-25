@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT:10000}       # 10000 par défaut pour Render, 8080 en local si configuré dans l'IDE
   servlet:
     context-path: /
 
@@ -22,8 +22,8 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
     admin:
-      fail-fast: false            # 👈 Ajouté : Évite de crasher si le broker est injoignable
-      close-timeout: 0s           # 👈 Ajouté : Arrête d'attendre indéfiniment les topics existants
+      fail-fast: false            # Empêche l'application de crasher si le broker Kafka est injoignable
+      close-timeout: 0s           # Arrête d'attendre indéfiniment la réponse des clusters
     consumer:
       group-id: vogt-digital-campus
       auto-offset-reset: earliest
@@ -88,4 +88,4 @@ springdoc:
 logging:
   level:
     org.apache.kafka: ERROR
-    cm.vogt.digitalcampus.security: DEBUG # 👈 Aligné : Correction de l'espace d'indentation manquant
+    cm.vogt.digitalcampus.security: DEBUG
